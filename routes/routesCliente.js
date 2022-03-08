@@ -14,12 +14,22 @@ routes.get('/', (request,response) => {
     });
 });
 
+routes.get('/:id', (request,response) => {
+    request.getConnection((err,conn)=>{
+        if(err) return response.send(err);
+        conn.query('SELECT * FROM cliente WHERE correo = ?',[request.params.id],(err,rows) => {
+            if(err) return response.send(err);
+            response.json(rows);
+        });
+    });
+});
+
 // ============ Agregar datos ========
 routes.post('/', (request,response) => {
     request.getConnection((err,conn)=>{
         if(err) return response.send(err);
         conn.query('INSERT INTO cliente set ?',[request.body],(err,rows) => {
-            if(err) return response.send(err);
+            if(err) return response.send('NO');
 
             response.json(rows.affectedRows);
         });
@@ -30,7 +40,7 @@ routes.post('/', (request,response) => {
 routes.delete('/:id', (request,response) => {
     request.getConnection((err,conn)=>{
         if(err) return response.send(err);
-        conn.query('DELETE FROM cliente WHERE id = ?',[request.params.id],(err,rows) => {
+        conn.query('DELETE FROM cliente WHERE correo = ?',[request.params.id],(err,rows) => {
             if(err) return response.send(err);
             response.json(rows);
         });
@@ -41,7 +51,7 @@ routes.delete('/:id', (request,response) => {
 routes.put('/:id', (request,response) => {
     request.getConnection((err,conn)=>{
         if(err) return response.send(err);
-        conn.query('UPDATE cliente SET ? WHERE id = ?',[request.body,request.params.id],(err,rows) => {
+        conn.query('UPDATE cliente SET ? WHERE correo = ?',[request.body,request.params.id],(err,rows) => {
             if(err) return response.send(err);
             response.json(rows);
         });

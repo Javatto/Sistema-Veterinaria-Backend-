@@ -2,7 +2,6 @@ const express = require('express');
 const mysql = require('mysql');
 const myconn = require('express-myconnection');
 const routesCliente = require('./routes/routesCliente.js');
-const routesMascota = require('./routes/routesMascota.js');
 
 const app = express();
 app.set('port', process.env.PORT || 9000);
@@ -18,7 +17,7 @@ const dbOptions = {
     host: 'localhost',
     user: 'admin',
     password: '123',
-    database: 'sistema veterinaria'
+    database: 'veterinaria'
 }
  
 app.use(myconn(mysql,dbOptions,'single'));
@@ -26,9 +25,8 @@ app.use(myconn(mysql,dbOptions,'single'));
 //=================== routes ==============
 app.get('/', (request, response) => {
     response.send('Servidor en marcha, sistema veterinaria');
-}); ``
+}); 
 
 app.use('/api/cliente',routesCliente);
-app.use('/api/mascota',routesMascota);
 
 
