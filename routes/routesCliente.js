@@ -24,6 +24,16 @@ routes.get('/:id', (request,response) => {
     });
 });
 
+routes.get('/:id', (request,response) => {
+    request.getConnection((err,conn)=>{
+        if(err) return response.send(err);
+        conn.query('SELECT * FROM cliente WHERE correo = ?',[request.params.id],(err,rows) => {
+            if(err) return response.send(err);
+            response.json(rows);
+        });
+    });
+});
+
 // ============ Agregar datos ========
 routes.post('/', (request,response) => {
     request.getConnection((err,conn)=>{

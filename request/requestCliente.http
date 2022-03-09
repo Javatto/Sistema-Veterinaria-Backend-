@@ -11,7 +11,8 @@ Content-Type: application/json
     "correo":"pru@5",
     "nombre": "prueba1",
     "apellidos": "apellido_prueb1",
-    "telefono": 5547130095
+    "telefono": 5547130095,
+    "contrasena":"123"
 }
 
 ###
